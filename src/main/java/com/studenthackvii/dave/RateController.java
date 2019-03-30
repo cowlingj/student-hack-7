@@ -1,16 +1,20 @@
 package com.studenthackvii.dave;
 
+import java.io.FileReader;
 import java.io.IOException;
+import java.nio.FloatBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
+import java.util.stream.IntStream;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
@@ -18,26 +22,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.tensorflow.Graph;
+
+import org.tensorflow.SavedModelBundle;
 import org.tensorflow.Session;
 import org.tensorflow.Tensor;
 import org.tensorflow.TensorFlow;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.text.ParseException;
-import java.util.Iterator;
-import java.util.logging.Logger;
-import java.util.stream.IntStream;
 
 @Controller
 public class RateController {
 
   private ObjectMapper mapper = new ObjectMapper();
 
-  @Value("classpath:/peter.json")
+  @Value("classpath:/data/cartoonsToRate.json")
   private Resource cartoonsList;
 
   @GetMapping("/rate")
@@ -87,25 +83,27 @@ public class RateController {
 
     private void peter(){
 
-        try (Graph g = new Graph()) {
-            final String value = "Hello from " + TensorFlow.version();
+        System.out.println("Tensor version" + TensorFlow.version());
 
-            // Construct the computation graph with a single operation, a constant
-            // named "MyConst" with a value "value".
-            try (Tensor t = Tensor.create(value.getBytes(StandardCharsets.UTF_8))) {
-                // The Java API doesn't yet include convenience functions for adding operations.
-                g.opBuilder("Const", "MyConst").setAttr("dtype", t.dataType()).setAttr("value", t).build();
-            }
+        final String TRAINING_DATA = "";
+        final int NUM_PREDICTIONS = 1;
 
-            // Execute the "MyConst" operation in a Session.
-            try (Session s = new Session(g);
-                 // Generally, there may be multiple output tensors,
-                 // all of them must be closed to prevent resource leaks.
-                 Tensor output = s.runner().fetch("MyConst").run().get(0)) {
-                System.out.println("HELLOOOOOOO " + new String(output.bytesValue(), StandardCharsets.UTF_8));
+        try (SavedModelBundle b = SavedModelBundle.load(TRAINING_DATA)) {
 
+            Session sess = b.session(); // create the session from the Bundle
+            // create an input Tensor, value = 2.0f
+            Tensor x = Tensor.create(new long[]{NUM_PREDICTIONS},
+                    FloatBuffer.wrap(new float[]{2.0f}));
 
-            }
+            // run the model and get the result, 4.0f.
+            float[] y = sess.runner()
+                    .feed("x", x)
+                    .fetch("y")
+                    .run()
+                    .get(0)
+                    .copyTo(new float[NUM_PREDICTIONS]);
+
+            System.out.println(y[0]);
         }
     }
 
