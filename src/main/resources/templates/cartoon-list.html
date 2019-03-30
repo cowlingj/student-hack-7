@@ -29,7 +29,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 mt-3">
-                <div class="card" style="margin-bottom: 15px;" th:each="cartoon : ${cartoons}">
+                <div class="card" style="margin-bottom: 15px;" th:each="cartoon, iteration : ${cartoons}">
                     <div class="card-horizontal">
                         <div class="card-body">
                             <div class="row">
@@ -42,18 +42,18 @@
                                     <h4 class="card-title" th:text="${cartoon.name}">Card title</h4>
                                 </div>
                                 <div class="col-2">
-                                    <div class="container" id="ratingStars">
+                                    <div class="container" th:id="'ratingStars-'+${iteration.index}">
                                         <div class="starrating d-flex justify-content-center flex-row-reverse">
-                                            <input type="radio" id="star5" name="rating" value="5"
-                                                onclick="change_rating(5)" /><label for="star5"></label>
-                                            <input type="radio" id="star4" name="rating" value="4"
-                                                onclick="change_rating(4)" /><label for="star4"></label>
-                                            <input type="radio" id="star3" name="rating" value="3"
-                                                onclick="change_rating(3)" /><label for="star3"></label>
-                                            <input type="radio" id="star2" name="rating" value="2"
-                                                onclick="change_rating(2)" /><label for="star2"></label>
-                                            <input type="radio" id="star1" name="rating" value="1"
-                                                onclick="change_rating(1)" /><label for="star1"></label>
+                                            <input type="radio" th:id="'star5'+${iteration.index}" th:name="'rating'+${iteration.index}" value="5"
+                                                onclick="change_rating(5)" /><label th:for="'star5'+${iteration.index}"></label>
+                                            <input type="radio" th:id="'star4'+${iteration.index}" th:name="'rating'+${iteration.index}" value="4"
+                                                onclick="change_rating(4)" /><label th:for="'star4'+${iteration.index}"></label>
+                                            <input type="radio" th:id="'star3'+${iteration.index}" th:name="'rating'+${iteration.index}" value="3"
+                                                onclick="change_rating(3)" /><label th:for="'star3'+${iteration.index}"></label>
+                                            <input type="radio" th:id="'star2'+${iteration.index}" th:name="'rating'+${iteration.index}" value="2"
+                                                onclick="change_rating(2)" /><label th:for="'star2'+${iteration.index}"></label>
+                                            <input type="radio" th:id="'star1'+${iteration.index}" th:name="'rating'+${iteration.index}" value="1"
+                                                onclick="change_rating(1)" /><label th:for="'star1'+${iteration.index}"></label>
                                         </div>
                                     </div>
                                 </div>
