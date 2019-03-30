@@ -49,6 +49,7 @@ public class RateController {
       .getAnonymousLogger()
       .info(String.format("cartoonsFile items: %d", cartoonsFile.getCartoons().size()));
     model.addAttribute("ratings", new Rating());
+    model.addAttribute("cartoons", cartoonsFile.getCartoons());
     return "/test.html";
   }
 
