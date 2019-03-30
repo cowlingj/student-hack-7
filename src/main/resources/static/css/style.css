@@ -3,14 +3,26 @@
     flex: 1 1 auto;
 }
 
+.btn-submit {
+    border-radius: 3em;
+    color: #f57c00;
+    font-size: 15px;
+    font-weight: 500;
+    border: 2px solid #f57c00;
+}
+
+.btn-submit:hover {
+    color: white;
+    border: 2px solid #fff;
+    background:-webkit-linear-gradient(50deg,#ffa726 ,#f57c00)!important;background:-o-linear-gradient(50deg,#ffa726 ,#f57c00)!important;background:linear-gradient(40deg,#ffa726 ,#f57c00)!important
+}
+
 /***
  *  Simple Pure CSS Star Rating Widget Bootstrap 4 
  * 
  *  www.TheMastercut.co
  *  
  ***/
-
- 
 
  /* Styling 
  ––––––––––––––––––––––––––––––––– */

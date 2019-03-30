@@ -64,6 +64,10 @@
             </div>
         </div>
 
+        <div class="d-flex justify-content-center" style="margin: 10px;">
+        <button type="button" class="btn btn-submit">Submit</button>
+        </div>
+
         <h1>Form</h1>
     <form action="#" th:action="@{/rate}" th:object="${ratings}" method="post">
     	<p>Id: <input type="number" th:field="*{id}" /></p>
