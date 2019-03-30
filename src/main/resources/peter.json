@@ -1,0 +1,14 @@
+{
+      "cartoons":[
+          {  "name": "Tom & Jerry", "url": "https://www.samaa.tv/wp-content/uploads/2018/10/tom-n-jerry.jpg", "id": 0, "genre": "comedy"},
+          {  "name": "Rick & Morty", "url": "http://cdn.shopify.com/s/files/1/0191/7850/products/RICKMORTY_39_-_COVER_A_FNL_WEB_1024x1024.jpg?v=1530034748", "id": 1, "genre": "adventure"},
+          {  "name": "Scooby-Doo", "url": "https://images-eu.ssl-images-amazon.com/images/I/811KEbZlORL.png", "id": 2, "genre": "mystery" },
+          {  "name": "South Park", "url": "https://cdn.pastemagazine.com/www/articles/SouthPark_Header.jpg", "id": 3, "genre": "comedy" },
+          {  "name": "", "url": "https://www.dckids.com/Portals/2/Content/Character/JusticeLeague_Superman/Source/Default/Superman.png", "id": 4, "genre": "" },
+          {  "name": "", "url": "", "id": 5, "genre": "" },
+          {  "name": "", "url": "", "id": 6, "genre": "" },
+          {  "name": "", "url": "", "id": 7, "genre": "" },
+          {  "name": "", "url": "", "id": 8, "genre": "" },
+          {  "name": "", "url": "", "id": 9, "genre": "" },
+      ]
+}
