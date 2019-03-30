@@ -3,7 +3,6 @@ package com.studenthackvii.dave;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.FloatBuffer;
-import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
@@ -82,50 +81,27 @@ public class RateController {
 
     private void peter(){
 
-        System.out.println("Tensor version" + TensorFlow.version());
-
-        final String TRAINING_DATA = "";
-        final int NUM_PREDICTIONS = 1;
-
-        try (SavedModelBundle b = SavedModelBundle.load(TRAINING_DATA)) {
-
-            Session sess = b.session(); // create the session from the Bundle
-            // create an input Tensor, value = 2.0f
-            Tensor x = Tensor.create(new long[]{NUM_PREDICTIONS},
-                    FloatBuffer.wrap(new float[]{2.0f}));
-
-            // run the model and get the result, 4.0f.
-            float[] y = sess.runner()
-                    .feed("x", x)
-                    .fetch("y")
-                    .run()
-                    .get(0)
-                    .copyTo(new float[NUM_PREDICTIONS]);
-
-            System.out.println(y[0]);
-        }
-    }
-
-    private double[] converter(Rating rating, int occurrences){
-
-        final int GET_HALF = 2, ARRAY_SIZE = 2, SET_RATING = 0, SET_OCCURRENCES = 1, LOWER_DOWN_NUMBER = 3;
-        final int MAXIMUM_OCCURRENCES = 99, MAXIMUM_RATING = 5, MINIMUM_RATING = 1, MINIMUM_OCCURRENCES = 0;
-        final double CONVERT_TO_DECIMAL = 0.01;
-
-        if(rating.getId() > MAXIMUM_RATING) rating.setId(MAXIMUM_RATING);
-        if(rating.getId() < MINIMUM_RATING) rating.setId(MINIMUM_RATING);
-
-        if(occurrences < MINIMUM_OCCURRENCES) occurrences = MINIMUM_OCCURRENCES;
-        if(occurrences > MAXIMUM_OCCURRENCES) occurrences = MAXIMUM_OCCURRENCES;
-
-        final int newRating = rating.getReview() - LOWER_DOWN_NUMBER / GET_HALF; // formula;
-        final double newOccurrences = occurrences * CONVERT_TO_DECIMAL;
-
-        double[] array = new double[ARRAY_SIZE];
-        array[SET_RATING] = newRating;
-        array[SET_OCCURRENCES] = newOccurrences;
-
-        return array;
-    }
-
+      System.out.println("Tensor version" + TensorFlow.version());
+  
+      final String TRAINING_DATA = "";
+      final int NUM_PREDICTIONS = 1;
+  
+      try (SavedModelBundle b = SavedModelBundle.load(TRAINING_DATA)) {
+  
+          Session sess = b.session(); // create the session from the Bundle
+          // create an input Tensor, value = 2.0f
+          Tensor x = Tensor.create(new long[]{NUM_PREDICTIONS},
+                  FloatBuffer.wrap(new float[]{2.0f}));
+  
+          // run the model and get the result, 4.0f.
+          float[] y = sess.runner()
+                  .feed("x", x)
+                  .fetch("y")
+                  .run()
+                  .get(0)
+                  .copyTo(new float[NUM_PREDICTIONS]);
+  
+          System.out.println(y[0]);
+      }
+  }
 }
