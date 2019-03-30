@@ -1,13 +1,15 @@
 package com.studenthackvii.dave;
 
+import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
+import java.util.stream.IntStream;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -23,21 +25,12 @@ import org.tensorflow.Session;
 import org.tensorflow.Tensor;
 import org.tensorflow.TensorFlow;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.text.ParseException;
-import java.util.Iterator;
-import java.util.logging.Logger;
-import java.util.stream.IntStream;
-
 @Controller
 public class RateController {
 
   private ObjectMapper mapper = new ObjectMapper();
 
-  @Value("classpath:/peter.json")
+  @Value("classpath:/data/cartoonsToRate.json")
   private Resource cartoonsList;
 
   @GetMapping("/rate")
