@@ -29,63 +29,64 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 mt-3">
-                <div class="card">
+                <div class="card" style="margin-bottom: 15px;" th:each="cartoon : ${cartoons}">
                     <div class="card-horizontal">
-                        <div class="img-square-wrapper">
-                            <img class="" src="http://via.placeholder.com/300x180" alt="Card image cap">
-                        </div>
                         <div class="card-body">
                             <div class="row">
-                                    <div class="col-9">
-                                <h4 class="card-title">Card title</h4>
-                                <p class="card-text">Some quick example text to build on the card title and make up the
-                                    bulk of the card's content.</p>
+                                <div class="col-2">
+                                    <div class="img-square-wrapper">
+                                        <img th:src="${cartoon.url}" class="img-fluid">
                                     </div>
-                                    <div class="col-3">
-                                <div class="container" id="ratingStars">
-                                    <div class="starrating d-flex justify-content-center flex-row-reverse">
-                                        <input type="radio" id="star5" name="rating" value="5"
-                                            onclick="change_rating(5)" /><label for="star5"></label>
-                                        <input type="radio" id="star4" name="rating" value="4"
-                                            onclick="change_rating(4)" /><label for="star4"></label>
-                                        <input type="radio" id="star3" name="rating" value="3"
-                                            onclick="change_rating(3)" /><label for="star3"></label>
-                                        <input type="radio" id="star2" name="rating" value="2"
-                                            onclick="change_rating(2)" /><label for="star2"></label>
-                                        <input type="radio" id="star1" name="rating" value="1"
-                                            onclick="change_rating(1)" /><label for="star1"></label>
-                                    </div>
+                                </div>
+                                <div class="col-8">
+                                    <h4 class="card-title" th:text="${cartoon.name}">Card title</h4>
+                                </div>
+                                <div class="col-2">
+                                    <div class="container" id="ratingStars">
+                                        <div class="starrating d-flex justify-content-center flex-row-reverse">
+                                            <input type="radio" id="star5" name="rating" value="5"
+                                                onclick="change_rating(5)" /><label for="star5"></label>
+                                            <input type="radio" id="star4" name="rating" value="4"
+                                                onclick="change_rating(4)" /><label for="star4"></label>
+                                            <input type="radio" id="star3" name="rating" value="3"
+                                                onclick="change_rating(3)" /><label for="star3"></label>
+                                            <input type="radio" id="star2" name="rating" value="2"
+                                                onclick="change_rating(2)" /><label for="star2"></label>
+                                            <input type="radio" id="star1" name="rating" value="1"
+                                                onclick="change_rating(1)" /><label for="star1"></label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
             </div>
         </div>
+    </div>
 
-        <div class="d-flex justify-content-center" style="margin: 10px;">
+    <div class="d-flex justify-content-center" style="margin: 10px;">
         <button type="button" class="btn btn-submit">Submit</button>
-        </div>
+    </div>
 
-        <h1>Form</h1>
+    <h1>Form</h1>
     <form action="#" th:action="@{/rate}" th:object="${ratings}" method="post">
-    	<p>Id: <input type="number" th:field="*{id}" /></p>
+        <p>Id: <input type="number" th:field="*{id}" /></p>
         <p>Review: <input type="number" th:field="*{review}" /></p>
         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
     </form>
 
-
-
-        <!-- SCRIPTS -->
-        <!-- JQuery -->
-        <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
-        <!-- Bootstrap tooltips -->
-        <script type="text/javascript" src="js/popper.min.js"></script>
-        <!-- Bootstrap core JavaScript -->
-        <script type="text/javascript" src="js/bootstrap.min.js"></script>
-        <!-- MDB core JavaScript -->
-        <script type="text/javascript" src="js/mdb.min.js"></script>
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
 </body>
 
 </html>
