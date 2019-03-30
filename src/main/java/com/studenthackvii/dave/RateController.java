@@ -19,7 +19,7 @@ public class RateController {
     Logger
       .getAnonymousLogger()
       .info(String.format("resource exists: %s", comicList.exists()));
-    return "/index.html";
+    return "/test.html";
   }
 
   @PostMapping("/rate")
