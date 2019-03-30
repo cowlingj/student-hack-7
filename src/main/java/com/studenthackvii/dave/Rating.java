@@ -17,7 +17,7 @@ public class Rating {
         return id;
     }
 
-    int getReview() {
+    public int getReview() {
         return review;
     }
 }
