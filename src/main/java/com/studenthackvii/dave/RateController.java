@@ -42,7 +42,7 @@ public class RateController {
                 .info(String.format("cartoonsFile items: %d", cartoonsFile.getCartoons().size()));
         model.addAttribute("ratings", new Rating());
         model.addAttribute("cartoons", cartoonsFile.getCartoons());
-        return "/test.html";
+        return "/cartoon-list.html";
     }
 
     @PostMapping("/rate")
@@ -73,7 +73,7 @@ public class RateController {
             e.printStackTrace();
         }
         peter();
-        return "/index.html";
+        return "/recommended.html";
     }
 
     private void peter() {
