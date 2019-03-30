@@ -41,15 +41,16 @@ public class RateController {
                 .getAnonymousLogger()
                 .info(String.format("cartoonsFile items: %d", cartoonsFile.getCartoons().size()));
         model.addAttribute("ratings", new Rating());
+        model.addAttribute("cartoons", cartoonsFile.getCartoons());
         return "/test.html";
     }
 
     @PostMapping("/rate")
-    public String postRatings(@ModelAttribute("ratings") Rating[] ratings) {
+    public String postRatings(@ModelAttribute("ratings") Rating ratings) {
         JSONParser parser = new JSONParser();
 
         try {
-            final String FILE_PATH = "C:\\Users\\Peter Boncheff\\IntelliJIDEAProjects\\student-hack-7\\src\\main\\resources\\peter.json" ;
+            final String FILE_PATH = "C:\\Users\\Peter Boncheff\\IntelliJIDEAProjects\\student-hack-7\\src\\main\\resources\\data\\cartoonsToRate.json" ;
             final String JSON_NAME = "name", JSON_URL = "url", JSON_ID = "id", JSON_GENRE = "genre";
 
             Object obj = parser.parse(new FileReader(FILE_PATH));
