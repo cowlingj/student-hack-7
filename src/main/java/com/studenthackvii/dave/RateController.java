@@ -5,14 +5,16 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 public class RateController {
 
-  @Value("classpath:/peter.json")
-  private Resource comicList;
+    @Value("classpath:/peter.json")
+    private Resource comicList;
 
   @GetMapping("/rate")
   public String getCartoons() {
@@ -22,8 +24,11 @@ public class RateController {
     return "/test.html";
   }
 
-  @PostMapping("/rate")
-  public String postRatings() {
-    return "/index.html";
-  }
+    @PostMapping("/rate")
+    public String postRatings( @ModelAttribute("ratings") Rating[] ratings) {
+
+
+        return "/index.html";
+    }
+
 }
