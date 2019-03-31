@@ -1,20 +1,13 @@
-from flask import Flask
+import os
 import tensorflow as tf
-from random import Random
 import json
 
-app = Flask(__name__)
-
-
-@app.route("/")
-def hello():
-    # do tf calculation here
-    return "Hello World!"
-
+# gotta catch 'em all!
 
 if __name__ == '__main__':
 
-    input = json.load(open("expected.json"))["input"]
+    root = os.path.realpath(os.path.dirname(os.path.dirname(__file__)))
+    input_json = json.load(open(os.path.join(root, "resources", "data", "expected.json")))["input"]
 
     zeros = tf.ones(shape=[10], dtype=tf.float16)
 
@@ -46,12 +39,12 @@ if __name__ == '__main__':
 
     optimizer = tf.train.GradientDescentOptimizer(0.001)
     loss = tf.losses.mean_squared_error([expected_out], result
-    )
+                                        )
     train = optimizer.minimize(loss)
 
     with tf.Session() as s:
-        for i in range(len(input) * 10000):
-            input_data = input[i % len(input)]
+        for i in range(len(input_json) * 1):
+            input_data = input_json[i % len(input_json)]
             s.run(init)
             _, run_result, ex_out, run_loss = s.run(
                 (train, result, expected_out, loss),
@@ -66,8 +59,8 @@ if __name__ == '__main__':
             )
             print("loss: ", run_loss)
 
-    # writer = tf.summary.FileWriter('.')
-    # writer.add_graph(tf.get_default_graph())
-    # writer.flush()
+        tf.train.Saver().save(s, os.path.join(root, "resources", "data", "model.ckpt"))
 
-    app.run()
+        writer = tf.summary.FileWriter(os.path.join(root, "resources", "data"))
+        writer.add_graph(tf.get_default_graph())
+        writer.flush()
