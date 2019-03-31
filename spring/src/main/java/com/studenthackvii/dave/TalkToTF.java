@@ -28,6 +28,6 @@ public class TalkToTF {
 
     public static class ConfidenceRatings {
         public float[] confidence;
-        public float[] rateings;
+        public float[] ratings;
     }
 }

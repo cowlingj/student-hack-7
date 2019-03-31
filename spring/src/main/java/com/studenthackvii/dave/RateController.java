@@ -14,11 +14,12 @@ import javax.annotation.PostConstruct;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.studenthackvii.dave.TalkToTF.ConfidenceRatings;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
@@ -33,6 +34,8 @@ import org.tensorflow.*;
 
 @Controller
 public class RateController {
+    @Autowired
+    private TalkToTF api;
 
     private ObjectMapper mapper = new ObjectMapper();
 
@@ -56,7 +59,7 @@ public class RateController {
     }
 
     @PostMapping(value = "/rate", consumes = { MediaType.APPLICATION_FORM_URLENCODED_VALUE })
-    public String postRatings(@RequestParam int[] ids, @RequestParam int[] reviews) {
+    public String postRatings(@RequestParam int[] ids, @RequestParam int[] reviews) throws IOException {
 
         Rating[] ratingArray = new Rating[ids.length];
         Rating currentRating;
@@ -64,18 +67,16 @@ public class RateController {
         // go through all cartoons and add all genres to a list
         for (int i = 0; i < ratingArray.length; i++) {
             String[] currentGenres = cartoonsFile.getCartoons().get(i).getGenre();
-            for(String genre : currentGenres)
-            {
-              if (!allGenresList.contains(genre))
-              {
-                allGenresList.add(genre);
-              }
+            for (String genre : currentGenres) {
+                if (!allGenresList.contains(genre)) {
+                    allGenresList.add(genre);
+                }
             }
         }
         String[] genreArray = allGenresList.toArray(new String[0]);
         int[] cumulativeGenreRating = new int[genreArray.length];
         int[] occurences = new int[genreArray.length];
-        
+
         for (int i = 0; i < ratingArray.length; i++) {
             currentRating = new Rating();
             currentRating.setId(ids[i]);
@@ -89,26 +90,37 @@ public class RateController {
             // get genres of current cartoon
             String[] currentGenres = cartoonsFile.getCartoons().get(ratingArray[i].getId()).getGenre();
 
-            for (int index = 0; index < genreArray.length; index++)
-            {
-                for(int j=0; j<currentGenres.length; j++)
-                {
+            for (int index = 0; index < genreArray.length; index++) {
+                for (int j = 0; j < currentGenres.length; j++) {
                     if (genreArray[index] == currentGenres[j]) {
-                      cumulativeGenreRating[index] += reviews[i];
-                      occurences[index] ++;
+                        cumulativeGenreRating[index] += reviews[i];
+                        occurences[index]++;
                     }
                 }
             }
 
         }
 
-        for(int i = 0; i < genreArray.length; i++)
-        {
-            double avg = (double)cumulativeGenreRating[i]/occurences[i];
+float[] fArray = new float[10];
+float[] fArray2 = new float[10];
+
+        for (int i = 0; i < genreArray.length; i++) {
+            double avg = (double) cumulativeGenreRating[i] / occurences[i];
             double adjustedAvg = lerp(avg, 1, 5, -1, 1);
+            fArray[i] = (float)adjustedAvg;
             Logger.getAnonymousLogger().info(String.format("lerp for genre: %d", i));
             Logger.getAnonymousLogger().info(String.format("lerp: %f", adjustedAvg));
         }
+
+        for (int i = 0; i < genreArray.length; i++) {
+            double adjustedAvg = lerp( occurences[i], 0, 20, 0, 0.99);
+            fArray2[i] = (float)adjustedAvg;
+        }
+
+ConfidenceRatings cr = new ConfidenceRatings();
+cr.ratings = fArray;
+cr.confidence = fArray2;
+        api.talk(new ConfidenceRatings());
 
 
         return "/recommended.html";
