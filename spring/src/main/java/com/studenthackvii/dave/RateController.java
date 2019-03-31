@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
@@ -59,7 +60,22 @@ public class RateController {
 
         Rating[] ratingArray = new Rating[ids.length];
         Rating currentRating;
-
+        List<String> allGenresList = new ArrayList<String>();
+        // go through all cartoons and add all genres to a list
+        for (int i = 0; i < ratingArray.length; i++) {
+            String[] currentGenres = cartoonsFile.getCartoons().get(i).getGenre();
+            for(String genre : currentGenres)
+            {
+              if (!allGenresList.contains(genre))
+              {
+                allGenresList.add(genre);
+              }
+            }
+        }
+        String[] genreArray = allGenresList.toArray(new String[0]);
+        int[] cumulativeGenreRating = new int[genreArray.length];
+        int[] occurences = new int[genreArray.length];
+        
         for (int i = 0; i < ratingArray.length; i++) {
             currentRating = new Rating();
             currentRating.setId(ids[i]);
@@ -69,13 +85,37 @@ public class RateController {
             // checking the Rating objects have the ID and Review
             Logger.getAnonymousLogger().info(String.format("rate id: %d", ratingArray[i].getId()));
             Logger.getAnonymousLogger().info(String.format("rate review: %d", ratingArray[i].getReview()));
+
+            // get genres of current cartoon
+            String[] currentGenres = cartoonsFile.getCartoons().get(ratingArray[i].getId()).getGenre();
+
+            for (int index = 0; index < genreArray.length; index++)
+            {
+                for(int j=0; j<currentGenres.length; j++)
+                {
+                    if (genreArray[index] == currentGenres[j]) {
+                      cumulativeGenreRating[index] += reviews[i];
+                      occurences[index] ++;
+                    }
+                }
+            }
+
         }
+
+        for(int i = 0; i < genreArray.length; i++)
+        {
+            double avg = (double)cumulativeGenreRating[i]/occurences[i];
+            double adjustedAvg = lerp(avg, 1, 5, -1, 1);
+            Logger.getAnonymousLogger().info(String.format("lerp for genre: %d", i));
+            Logger.getAnonymousLogger().info(String.format("lerp: %f", adjustedAvg));
+        }
+
 
         return "/recommended.html";
     }
 
-    public int lerp(int value, int a1, int a2, int b1, int b2) {
-
+    public double lerp(double value, double a1, double a2, double b1, double b2) {
+        Logger.getAnonymousLogger().info(String.format("average value: %f", value));
         if (value <= a1) {
             return b1;
         }
@@ -84,7 +124,7 @@ public class RateController {
             return b2;
         }
 
-        return (int)(((double)(value - a1)) / (a2 - a1) * (b2 - b1) ) + b1;
+        return (((value - a1) * (b2 - b1)) / (a2 - a1) ) + b1;
     }
 
 }
