@@ -10,21 +10,19 @@ if __name__ == '__main__':
     root = os.path.realpath(os.path.dirname(os.path.dirname(__file__)))
     input_json = json.load(open(os.path.join(root, "resources", "data", "expected.json")))["input"]
 
+    g = tf.get_default_graph()
     model()
 
-    g = tf.Graph()
-
-    result = g.get_tensor_by_name("result")
-    con_in = g.get_tensor_by_name("con_in")
-    rat_in = g.get_tensor_by_name("rat_in")
+    result = g.get_tensor_by_name("result:0")
+    con_in = g.get_tensor_by_name("con_in:0")
+    rat_in = g.get_tensor_by_name("rat_in:0")
 
     expected_out = tf.placeholder(tf.float16, shape=[10])
 
     init = tf.global_variables_initializer()
 
     optimizer = tf.train.GradientDescentOptimizer(0.001)
-    loss = tf.losses.mean_squared_error([expected_out],
-                                        )
+    loss = tf.losses.mean_squared_error([expected_out], result)
     train = optimizer.minimize(loss)
 
     with tf.Session() as s:
