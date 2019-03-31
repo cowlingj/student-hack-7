@@ -1,20 +1,26 @@
 from flask import Flask
 import tensorflow as tf
 from random import Random
+import json
 
 app = Flask(__name__)
+
 
 @app.route("/")
 def hello():
     # do tf calculation here
     return "Hello World!"
 
+
 if __name__ == '__main__':
 
-    zeros = tf.zeros(shape=[10], dtype=tf.float16)
+    input = json.load(open("expected.json"))["input"]
+
+    zeros = tf.ones(shape=[10], dtype=tf.float16)
 
     con_in = tf.placeholder(tf.float16, shape=[10])
     rat_in = tf.placeholder(tf.float16, shape=[10])
+    expected_out = tf.placeholder(tf.float16, shape=[10])
 
     con_m = tf.Variable(initial_value=[zeros],
                         dtype=tf.float16,
@@ -38,18 +44,30 @@ if __name__ == '__main__':
 
     init = tf.global_variables_initializer()
 
-    optimizer = tf.train.GradientDescentOptimizer(0.01)
-    loss = tf.losses.mean_squared_error(tf.constant(
-        [[0.1, 0.2, 0.3, -0.4, 0.5, -0.3, -.9, -.1, .2, -.1]],
-        dtype=tf.float16), result
+    optimizer = tf.train.GradientDescentOptimizer(0.001)
+    loss = tf.losses.mean_squared_error([expected_out], result
     )
     train = optimizer.minimize(loss)
 
     with tf.Session() as s:
-        s.run(init)
-        print("result: ", s.run((train, loss), feed_dict={
-          con_in: [Random().random() for i in range(10)],
-          rat_in: [Random().random() for i in range(10)]
-        }))
+        for i in range(len(input) * 10000):
+            input_data = input[i % len(input)]
+            s.run(init)
+            _, run_result, ex_out, run_loss = s.run(
+                (train, result, expected_out, loss),
+                feed_dict={
+                    con_in: input_data["confidence"],
+                    rat_in: input_data["review"],
+                    expected_out: list(map(
+                        lambda cr,: cr[0] * cr[1],
+                        zip(input_data["confidence"], input_data["review"])
+                    ))
+                }
+            )
+            print("loss: ", run_loss)
+
+    # writer = tf.summary.FileWriter('.')
+    # writer.add_graph(tf.get_default_graph())
+    # writer.flush()
 
     app.run()
