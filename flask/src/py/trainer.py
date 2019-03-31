@@ -21,12 +21,12 @@ if __name__ == '__main__':
 
     init = tf.global_variables_initializer()
 
-    optimizer = tf.train.GradientDescentOptimizer(0.001)
+    optimizer = tf.train.GradientDescentOptimizer(0.01)
     loss = tf.losses.mean_squared_error([expected_out], result)
     train = optimizer.minimize(loss)
 
     with tf.Session() as s:
-        for i in range(len(input_json) * 1):
+        for i in range(len(input_json) * 10000):
             input_data = input_json[i % len(input_json)]
             s.run(init)
             _, run_result, ex_out, run_loss = s.run(
@@ -42,8 +42,8 @@ if __name__ == '__main__':
             )
             print("loss: ", run_loss)
 
-        tf.train.Saver().save(s, os.path.join(root, "resources", "data", "model.ckpt"))
-
-        writer = tf.summary.FileWriter(os.path.join(root, "resources", "data"))
-        writer.add_graph(tf.get_default_graph())
-        writer.flush()
+        # tf.train.Saver().save(s, os.path.join(root, "resources", "data", "model.ckpt"))
+        #
+        # writer = tf.summary.FileWriter(os.path.join(root, "resources", "data"))
+        # writer.add_graph(tf.get_default_graph())
+        # writer.flush()
