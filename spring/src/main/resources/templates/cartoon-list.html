@@ -28,21 +28,23 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12 mt-3">
-                <div class="card" style="margin-bottom: 15px;" th:each="cartoon, iteration : ${cartoons}">
+            <div class="col-12 mt-3" style="text-align:center;">
+                <div class="card d-inline-block" style="margin: 15px; width:30%; vertical-align: top;" th:each="cartoon, iteration : ${cartoons}">
                     <div class="card-horizontal">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-2">
+                                <div class="col-5">
                                     <div class="img-square-wrapper">
-                                        <img th:src="${cartoon.url}" class="img-fluid">
+                                        <img th:src="${cartoon.url}" class="img-fluid" style="max-height:100px; min-height:100px;">
                                     </div>
                                 </div>
-                                <div class="col-8">
+                                <div class="col-7">
+<div class="row">
                                     <h4 class="card-title" th:text="${cartoon.name}">Card title</h4>
-                                </div>
+</div>
+<div class="row">
                                 <div class="col-2">
-                                    <div class="container" th:id="'ratingStars-'+${iteration.index}">
+                                    <div class="container" style="margin-left:15px;" th:id="'ratingStars-'+${iteration.index}">
                                         <div class="starrating d-flex justify-content-center flex-row-reverse">
                                             <input type="radio" th:id="'star5'+${iteration.index}" th:name="'rating'+${iteration.index}" value="5"
                                                 onclick="change_rating(5)" /><label th:for="'star5'+${iteration.index}"></label>
@@ -57,6 +59,9 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+
                             </div>
                         </div>
                     </div>
