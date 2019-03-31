@@ -1,5 +1,5 @@
 HELP.md
-/target/
+/spring/target/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
@@ -27,5 +27,7 @@ HELP.md
 
 ### VS Code ###
 .vscode/
+
+### Python ###
 *.pyc
 venv
