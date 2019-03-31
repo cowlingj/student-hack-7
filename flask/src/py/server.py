@@ -16,8 +16,9 @@ json_url = os.path.join(root, "resources", "data", "data.json")
 def hello():
     # do tf calculation here
 
-    body = request.json
+    body = request.get_json()
     print(body)
+    print(request.data)
 
     session = tf.Session()
     model_init.model()

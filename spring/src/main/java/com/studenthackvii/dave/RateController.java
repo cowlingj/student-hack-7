@@ -73,7 +73,9 @@ public class RateController {
                 }
             }
         }
-        String[] genreArray = allGenresList.toArray(new String[0]);
+        String[] genreArray = new String[10];
+        allGenresList.toArray(genreArray);
+        Logger.getGlobal().info("list size: " + allGenresList.size());
         int[] cumulativeGenreRating = new int[genreArray.length];
         int[] occurences = new int[genreArray.length];
 
@@ -105,22 +107,24 @@ float[] fArray = new float[10];
 float[] fArray2 = new float[10];
 
         for (int i = 0; i < genreArray.length; i++) {
-            double avg = (double) cumulativeGenreRating[i] / occurences[i];
+
+            double avg = occurences[i] != 0 ? (double) cumulativeGenreRating[i] / occurences[i] : 0;
+            Logger.getGlobal().info("ave: " + avg);
             double adjustedAvg = lerp(avg, 1, 5, -1, 1);
-            fArray[i] = (float)adjustedAvg;
+            fArray[i] = Double.valueOf(adjustedAvg).floatValue();
             Logger.getAnonymousLogger().info(String.format("lerp for genre: %d", i));
             Logger.getAnonymousLogger().info(String.format("lerp: %f", adjustedAvg));
         }
 
         for (int i = 0; i < genreArray.length; i++) {
-            double adjustedAvg = lerp( occurences[i], 0, 20, 0, 0.99);
-            fArray2[i] = (float)adjustedAvg;
+            double a = lerp( occurences[i], 0, 20, 0, 0.99);
+            fArray2[i] = (float)a;
         }
 
 ConfidenceRatings cr = new ConfidenceRatings();
 cr.ratings = fArray;
 cr.confidence = fArray2;
-        api.talk(new ConfidenceRatings());
+        api.talk(cr);
 
 
         return "/recommended.html";

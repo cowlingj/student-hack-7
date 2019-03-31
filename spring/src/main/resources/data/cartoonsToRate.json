@@ -1,14 +1,14 @@
 {
     "cartoons":[
         {  "name": "Tom & Jerry", "url": "https://www.samaa.tv/wp-content/uploads/2018/10/tom-n-jerry.jpg", "id": 0, "genre": ["comedy", "family", "musical"]},
-        {  "name": "Rick & Morty", "url": "http://cdn.shopify.com/s/files/1/0191/7850/products/RICKMORTY_39_-_COVER_A_FNL_WEB_1024x1024.jpg?v=1530034748", "id": 1, "genre": ["adventure", "sci-fi", "black comedy"]},
+        {  "name": "Rick & Morty", "url": "http://cdn.shopify.com/s/files/1/0191/7850/products/RICKMORTY_39_-_COVER_A_FNL_WEB_1024x1024.jpg?v=1530034748", "id": 1, "genre": ["adventure", "sci-fi"]},
         {  "name": "Scooby-Doo", "url": "https://images-eu.ssl-images-amazon.com/images/I/811KEbZlORL.png", "id": 2, "genre": ["mystery", "comedy", "adventure"]},
-        {  "name": "South Park", "url": "https://cdn.pastemagazine.com/www/articles/SouthPark_Header.jpg", "id": 3, "genre": ["comedy", "satire", "black comedy", "animation","television comedy"] },
+        {  "name": "South Park", "url": "https://cdn.pastemagazine.com/www/articles/SouthPark_Header.jpg", "id": 3, "genre": ["comedy", "satire", "animation"] },
         {  "name": "Superman", "url": "https://www.dckids.com/Portals/2/Content/Character/JusticeLeague_Superman/Source/Default/Superman.png", "id": 4, "genre": ["action", "sci-fi", "adventure", "family","drama"] },
         {  "name": "Dexter's laboratory", "url": "http://cdn.shopify.com/s/files/1/0342/0081/products/Dexter_s_Laboratory_Poster_large.png?v=1504529193", "id": 5, "genre": ["comedy", "adventure", "sci-fi", "family"] },
-        {  "name": "Samurai Jack", "url": "https://static01.nyt.com/images/2017/01/12/watching/samurai-jack-watching-recommendation/samurai-jack-watching-recommendation-videoSixteenByNineJumbo1600.jpg", "id": 6, "genre": ["action", "adventure", "drama", "Martial Arts","comedy"] },
-        {  "name": "Ben 10", "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSR7ZlfRgxGqmsrYydQMIJGkOq5nn0xI-n0qMS-yc5FTb6Orpqyhg", "id": 7, "genre": ["sci-fi", "action", "thriller", "comedy","adventure"] },
+        {  "name": "Samurai Jack", "url": "https://static01.nyt.com/images/2017/01/12/watching/samurai-jack-watching-recommendation/samurai-jack-watching-recommendation-videoSixteenByNineJumbo1600.jpg", "id": 6, "genre": ["action", "adventure", "drama","comedy"] },
+        {  "name": "Ben 10", "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSR7ZlfRgxGqmsrYydQMIJGkOq5nn0xI-n0qMS-yc5FTb6Orpqyhg", "id": 7, "genre": ["sci-fi", "action", "comedy","adventure"] },
         {  "name": "Johnny Bravo", "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRi0nF4AwBuKEDDhKuvDFyNR7KKAtVsRRVakxSv0Y9Xwf7IhXQt4w", "id": 8, "genre": ["comedy"] },
-        {  "name": "Avatar: The Last Airbender", "url": "https://pmcvariety.files.wordpress.com/2018/09/last-airbender.jpg?w=700", "id": 9, "genre": ["fantasy", "comedy", "adventure", "action","fantasy"] }
+        {  "name": "Avatar: The Last Airbender", "url": "https://pmcvariety.files.wordpress.com/2018/09/last-airbender.jpg?w=700", "id": 9, "genre": ["comedy", "adventure", "action","fantasy"] }
     ]
 }
