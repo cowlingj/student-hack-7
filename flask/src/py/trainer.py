@@ -42,8 +42,8 @@ if __name__ == '__main__':
             )
             print("loss: ", run_loss)
 
-        # tf.train.Saver().save(s, os.path.join(root, "resources", "data", "model.ckpt"))
-        #
-        # writer = tf.summary.FileWriter(os.path.join(root, "resources", "data"))
-        # writer.add_graph(tf.get_default_graph())
-        # writer.flush()
+        tf.train.Saver().save(s, os.path.join(root, "resources", "data", "model.ckpt"))
+        
+        writer = tf.summary.FileWriter(os.path.join(root, "resources", "data"))
+        writer.add_graph(tf.get_default_graph())
+        writer.flush()
